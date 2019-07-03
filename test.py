@@ -9,27 +9,12 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-import argparse
 import tensorflow as tf
 from tensorflow import keras
 import model
-import utils
+import utils   
 import random
-random.seed(1984)
-
-parser = argparse.ArgumentParser()
-parser.add_argument("--model", help="model to train with, CNN, BLSTM or CNN-BLSTM")
-parser.add_argument("--epoch", type=int, default=100, help="number epochs")
-parser.add_argument("--batch_size", type=int, default=64, help="number batch_size")
-
-args = parser.parse_args()
-
-if not args.model:
-    raise ValueError('please specify model to train with, CNN, BLSTM or CNN-BLSTM')
-
-
-print('training with model architecture: {}'.format(args.model))   
-print('epochs: {}\nbatch_size: {}'.format(args.epoch, args.batch_size))
+random.seed(1984) 
 
 # 0 = all messages are logged (default behavior)
 # 1 = INFO messages are not printed
@@ -51,15 +36,14 @@ if gpus:
     except RuntimeError as e:
         # Memory growth must be set before GPUs have been initialized
         print(e)
-
+       
         
 # set dir
 DATA_DIR = './data'
 BIN_DIR = os.path.join(DATA_DIR, 'bin')
+PRE_TRAINED_DIR = './pre_trained'
 OUTPUT_DIR = './output'
 
-EPOCHS = args.epoch
-BATCH_SIZE = args.batch_size
 
 NUM_TRAIN = 13580
 NUM_TEST=4000
@@ -77,64 +61,17 @@ random.shuffle(train_list)
 valid_list= mos_list[-(NUM_TEST+NUM_VALID):-NUM_TEST]
 test_list= mos_list[-NUM_TEST:]
 
-print('{} for training; {} for valid; {} for testing'.format(NUM_TRAIN, NUM_TEST, NUM_VALID))        
-
-    
+print('{} for training; {} for valid; {} for testing'.format(NUM_TRAIN, NUM_VALID, NUM_TEST))    
 
 # init model
-if args.model == 'CNN':
-    MOSNet = model.CNN()
-elif args.model == 'BLSTM':
-    MOSNet = model.BLSTM()
-elif args.model == 'CNN-BLSTM':
-    MOSNet = model.CNN_BLSTM()
-else:
-    raise ValueError('please specify model to train with, CNN, BLSTM or CNN-BLSTM')
-
+MOSNet = model.CNN_BLSTM()
 model = MOSNet.build()
 
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(1e-4),
-    loss={'avg':'mse',
-          'frame':'mse'},)
-    
-CALLBACKS = [
-    keras.callbacks.ModelCheckpoint(
-        filepath=os.path.join(OUTPUT_DIR,'mosnet.h5'),
-        save_best_only=True,
-        monitor='val_loss',
-        verbose=1),
-    keras.callbacks.TensorBoard(
-        log_dir=os.path.join(OUTPUT_DIR,'tensorboard.log'),
-        update_freq='epoch'), 
-    keras.callbacks.EarlyStopping(
-        monitor='val_loss',
-        mode='min',
-        min_delta=0,
-        patience=5,
-        verbose=1)
-]
-
-# data generator
-train_data = utils.data_generator(train_list, BIN_DIR, frame=True, batch_size=BATCH_SIZE)
-valid_data = utils.data_generator(valid_list, BIN_DIR, frame=True, batch_size=BATCH_SIZE)
-
-tr_steps = int(NUM_TRAIN/BATCH_SIZE)
-val_steps = int(NUM_VALID/BATCH_SIZE)
+# load pre-trained weights
+model.load_weights(os.path.join(PRE_TRAINED_DIR, 'cnn_blstm.h5'))   # Load the best model   
 
 
-# start fitting model
-hist = model.fit_generator(train_data,
-                           steps_per_epoch=1,
-                           epochs=EPOCHS,
-                           callbacks=CALLBACKS,
-                           validation_data=valid_data,
-                           validation_steps=1,
-                           verbose=1,)
-    
 
-# plot testing result
-model.load_weights(os.path.join(OUTPUT_DIR,'mosnet.h5'),)   # Load the best model   
 
 print('testing...')
 MOS_Predict=np.zeros([len(test_list),])
@@ -230,3 +167,4 @@ plt.title('LCC= {:.4f}, SRCC= {:.4f}, MSE= {:.4f}'.format(LCC[0][1], SRCC[0], MS
 #     plt.text(x-0.05, y+0.1, sys_ID, fontsize=8)
 plt.show()
 plt.savefig('./output/MOSNet_system_scatter_plot.png', dpi=150)
+
