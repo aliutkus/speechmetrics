@@ -4,6 +4,9 @@ https://arxiv.org/abs/1904.08352
 
 # Dependency
 Linux Ubuntu 16.04
+- GPU: GeForce RTX 2080 Ti
+- Driver version: 418.67
+- CUDA version: 10.1
 
 Python 3.5
 - tensorflow-gpu==2.0.0-beta1 (cudnn=7.6.0)
