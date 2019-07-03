@@ -9,6 +9,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+import argparse
 import tensorflow as tf
 from tensorflow import keras
 import model
@@ -16,6 +17,19 @@ import utils
 import random
 random.seed(1984)
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--model", help="model to train with, CNN, BLSTM or CNN-BLSTM")
+parser.add_argument("--epoch", type=int, default=100, help="number epochs")
+parser.add_argument("--batch_size", type=int, default=64, help="number batch_size")
+
+args = parser.parse_args()
+
+if not args.model:
+    raise ValueError('please specify model to train with, CNN, BLSTM or CNN-BLSTM')
+
+
+print('training with model architecture: {}'.format(args.model))   
+print('epochs: {}\nbatch_size: {}'.format(args.epoch, args.batch_size))
 
 # 0 = all messages are logged (default behavior)
 # 1 = INFO messages are not printed
@@ -45,8 +59,8 @@ BIN_DIR = os.path.join(DATA_DIR, 'bin')
 LIST_DIR = os.path.join(DATA_DIR, 'preprocess')
 OUTPUT_DIR = './output'
 
-EPOCHS = 100
-BATCH_SIZE = 64
+EPOCHS = args.epoch
+BATCH_SIZE = args.batch_size
 
 NUM_TRAIN = 13580
 NUM_TEST=4000
@@ -66,10 +80,18 @@ test_list= mos_list[-NUM_TEST:]
 
 print('{} for training; {} for valid; {} for testing'.format(NUM_TRAIN, NUM_TEST, NUM_VALID))        
 
-        
+    
 
 # init model
-MOSNet = model.CNN()
+if args.model == 'CNN':
+    MOSNet = model.CNN()
+elif args.model == 'BLSTM':
+    MOSNet = model.BLSTM()
+elif args.model == 'CNN-BLSTM':
+    MOSNet = model.CNN_BLSTM()
+else:
+    raise ValueError('please specify model to train with, CNN, BLSTM or CNN-BLSTM')
+
 model = MOSNet.build()
 
 model.compile(
@@ -104,11 +126,11 @@ val_steps = int(NUM_VALID/BATCH_SIZE)
 
 # start fitting model
 hist = model.fit_generator(train_data,
-                           steps_per_epoch=tr_steps,
+                           steps_per_epoch=1,
                            epochs=EPOCHS,
                            callbacks=CALLBACKS,
                            validation_data=valid_data,
-                           validation_steps=val_steps,
+                           validation_steps=1,
                            verbose=1,)
     
 
