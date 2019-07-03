@@ -3,7 +3,9 @@ Implementation of  "MOSNet: Deep Learning based Objective Assessment for Voice C
 https://arxiv.org/abs/1904.08352
 
 # Dependency
+Linux Ubuntu 16.04
 
+Python 3.5
 - tensorflow-gpu==2.0.0-beta1 (cudnn=7.6.0)
 - scipy
 - pandas
