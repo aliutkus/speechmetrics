@@ -1,2 +1,2 @@
 include examples/data/*
-include absolute/mosnet/cnn_blstm.h5
+include speechmetrics/absolute/mosnet/*.h5
