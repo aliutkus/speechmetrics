@@ -1,6 +1,6 @@
 # speechmetrics
 
-This repository is a wrapper around several freely available implementations of objective metrics for estimating the quality of speech signals. It includes both _absolute_ and _relative_ metrics, which means metrics that do or do not need a reference signal, respectively.
+This repository is a wrapper around several freely available implementations of objective metrics for estimating the quality of speech signals. It includes both _relative_ and _absolute_ metrics, which means metrics that do or do not need a reference signal, respectively.
 
 
 If you find speechmetrics useful, you are welcome to cite the original papers for the corresponding metrics, since this is just a wrapper around the implementations that were kindly provided by the original authors.
