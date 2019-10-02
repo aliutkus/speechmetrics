@@ -1,44 +1,129 @@
-# MOSNet
-Implementation of  "MOSNet: Deep Learning based Objective Assessment for Voice Conversion"
-https://arxiv.org/abs/1904.08352
+# speechmetrics
 
-# Dependency
-Linux Ubuntu 16.04
-- GPU: GeForce RTX 2080 Ti
-- Driver version: 418.67
-- CUDA version: 10.1
+This repository is a wrapper around several freely available implementations of objective metrics for estimating the quality of speech signals. It includes both _absolute_ and _relative_ metrics, which means metrics that do or do not need a reference signal, respectively.
 
-Python 3.5
-- tensorflow-gpu==2.0.0-beta1 (cudnn=7.6.0)
-- scipy
-- pandas
-- matplotlib
-- librosa
 
-### Environment set-up
-For example,
+If you find speechmetrics useful, you are welcome to cite the original papers for the corresponding metrics, since this is just a wrapper around the implementations that were kindly provided by the original authors.
+
+# Installation
 ```
-conda create -n mosnet python=3.5
-conda activate mosnet
-pip install -r requirements.txt
-conda install cudnn=7.6.0
+pip install speechmetrics
 ```
 
 # Usage
 
-1. `cd ./data` and run `bash download.sh` to download the VCC2018 evaluation results and submitted speech. (downsample the submitted speech might take some times)
-2. Run `python mos_results_preprocess.py` to prepare the evaluation results. (Run `python bootsrap_estimation.py` to do the bootstrap experiment for intrinsic MOS calculation)
-3. Run `python utils.py` to extract .wav to .h5
-4. Run `python train.py --model CNN-BLSTM` to train a CNN-BLSTM version of MOSNet. ('CNN', 'BLSTM' or 'CNN-BLSTM' are supported in model.py, as described in paper)
-5. Run `python test.py` to test on the pre-trained weights with specified model and weight.
+`speechmetrics` has been designed to be easily used in a modular way. All you need to do is to specify the actual metrics you want to use and it will load them.
 
+This behaviour is encapsulated in the `load` function from the root of the package, that takes two arguments:
+* metrics: str or list of str
+  the available metrics that match this argument will be automatically loaded. This matching is relative to the structure of the speechmetrics package.
+  For instance:
+    - 'absolute' will match all absolute metrics
+    - 'absolute.srmr' or 'srmr' will only match SRMR
+    - '' will match all
+* window: float or None
+  gives the length in seconds of the windows on which to compute the actual scores. If None, the whole signals will be considered.
 
-### Note,
-The experimental results showed in the paper were trained on Keras with tensorflow 1.4.1 backend. However, the implementation here is based on tf2.0.0b1, so the results might vary a little. Additionally, the architectures showed in the paper were meta-architectures, any replace CNN/BLSTM with more fancy modules (ResNet etc.) would improve the final results. Tuning the hyper-parameters might result in the same favour. 
+## Example
+```
+import speechmetrics
+window_length = 5 # seconds
+metrics = speechmetrics.load('absolute', window_length)
 
+scores = metrics(path_to_audio_file)
+```
 
-# VCC2018 Database & Results
+# Available metrics
+## Absolute metrics
 
-The model is trained on the large listening evaluation results released by the Voice Conversion Challenge 2018.<br>
-The listening test results can be downloaded from [here](https://datashare.is.ed.ac.uk/handle/10283/3257)<br>
-The databases and results (submitted speech) can be downloaded from [here](https://datashare.is.ed.ac.uk/handle/10283/3061)<br>
+### MOSNet
+
+As provided by the authors of [MOSNet: Deep Learning based Objective Assessment for Voice Conversion](https://arxiv.org/abs/1904.08352). Original github [here](https://github.com/lochenchou/MOSNet)
+> @article{lo2019mosnet,  
+  title={MOSNet: Deep Learning based Objective Assessment for Voice Conversion},  
+  author={Lo, Chen-Chou and Fu, Szu-Wei and Huang, Wen-Chin and Wang, Xin and Yamagishi, Junichi and Tsao, Yu and Wang, Hsin-Min},  
+  journal={arXiv preprint arXiv:1904.08352},  
+  year={2019}
+}
+
+### SRMR
+
+As provided by the [SRMR Toolbox](https://github.com/jfsantos/SRMRpy), implemented by [@jfsantos](https://github.com/jfsantos).
+
+* > @article{falk2010non,  
+  title={A non-intrusive quality and intelligibility measure of reverberant and dereverberated speech},  
+  author={Falk, Tiago H and Zheng, Chenxi and Chan, Wai-Yip},  
+  journal={IEEE Transactions on Audio, Speech, and Language Processing},  
+  volume={18},  
+  number={7},  
+  pages={1766--1774},  
+  year={2010},  
+}
+
+* > @inproceedings{santos2014updated,
+  title={An updated objective intelligibility   estimation metric for normal hearing listeners under noise and reverberation},  
+  author={Santos, Joo F and Senoussaoui, Mohammed and Falk, Tiago H},  
+  booktitle={Proc. Int. Workshop Acoust. Signal Enhancement},  
+  pages={55--59},  
+  year={2014}  
+}
+
+* > @article{santos2014updating,  
+  title={Updating the SRMR-CI metric for improved intelligibility prediction for cochlear implant users},  
+  author={Santos, Jo{\~a}o F and Falk, Tiago H},  
+  journal={IEEE/ACM Transactions on Audio, Speech and Language Processing (TASLP)},  
+  volume={22},  
+  number={12},  
+  pages={2197--2206},  
+  year={2014},  
+}
+
+## Relative metrics
+### BSSEval
+
+As presented in [this](https://hal-lirmm.ccsd.cnrs.fr/lirmm-01766791v2/document) paper and freely available in [the official museval page](https://github.com/sigsep/sigsep-mus-eval), corresponds to BSSEval v4. There are 3 submetrics handled here: SDR, SAR, ISR.
+
+> @InProceedings{SiSEC18,  
+  author="St{\"o}ter, Fabian-Robert and Liutkus, Antoine and Ito, Nobutaka",  
+  title="The 2018 Signal Separation Evaluation Campaign",  
+  booktitle="Latent Variable Analysis and Signal Separation:
+  14th International Conference, LVA/ICA 2018, Surrey, UK",  
+  year="2018",  
+  pages="293--305"  
+}
+
+### PESQ
+
+As implemented [there](https://github.com/vBaiCai/python-pesq) by [@vBaiCai](https://github.com/vBaiCai).
+
+### STOI
+
+As implemented by [@mpariente]() [here](https://github.com/mpariente/pystoi)
+* > @inproceedings{taal2010short,  
+  title={A short-time objective intelligibility measure for time-frequency weighted noisy speech},  
+  author={Taal, Cees H and Hendriks, Richard C and Heusdens, Richard and Jensen, Jesper},  
+  booktitle={2010 IEEE International Conference on Acoustics, Speech and Signal Processing},  
+  pages={4214--4217},  
+  year={2010},  
+  organization={IEEE}  
+}
+* > @article{taal2011algorithm,  
+  title={An algorithm for intelligibility prediction of time--frequency weighted noisy speech},  
+  author={Taal, Cees H and Hendriks, Richard C and Heusdens, Richard and Jensen, Jesper},  
+  journal={IEEE Transactions on Audio, Speech, and Language Processing},  
+  volume={19},  
+  number={7},  
+  pages={2125--2136},  
+  year={2011},  
+  publisher={IEEE}  
+}
+* > @article{jensen2016algorithm,  
+  title={An algorithm for predicting the intelligibility of speech masked by modulated noise maskers},  
+  author={Jensen, Jesper and Taal, Cees H},  
+  journal={IEEE/ACM Transactions on Audio, Speech, and Language Processing},  
+  volume={24},  
+  number={11},  
+  pages={2009--2022},  
+  year={2016},  
+  publisher={IEEE}  
+}
