@@ -6,8 +6,10 @@ This repository is a wrapper around several freely available implementations of 
 If you find speechmetrics useful, you are welcome to cite the original papers for the corresponding metrics, since this is just a wrapper around the implementations that were kindly provided by the original authors.
 
 # Installation
+
+clone this repository, and install it in the current environment by typing the following command from the root folder (where `setup.py` is):
 ```
-pip install speechmetrics
+pip install -e .
 ```
 
 # Usage
