@@ -7,8 +7,17 @@ If you find speechmetrics useful, you are welcome to cite the original papers fo
 
 # Installation
 
+For cpu usage:
 ```
-pip install https://github.com/aliutkus/speechmetrics/archive/master.zip
+pip install numpy
+pip install git+https://github.com/aliutkus/speechmetrics#speechmetrics[cpu]
+```
+
+For gpu usage (on the MOSNet)
+
+```
+pip install numpy
+pip install git+https://github.com/aliutkus/speechmetrics#speechmetrics[gpu]
 ```
 
 # Usage
