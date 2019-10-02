@@ -11,7 +11,6 @@ setup(
     install_requires=[
         'numpy',
         'scipy',
-        'tensorflow-gpu==2.0.0',
         'tqdm',
         'librosa',
         'pystoi',
@@ -20,4 +19,9 @@ setup(
         'pypesq @ git+https://github.com/vBaiCai/python-pesq',
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy'
     ],
+    extras_require={
+        'tf': ['tensorflow==2.0.0'],
+        'tf_gpu': ['tensorflow-gpu==2.0.0'],
+    },
+    include_package_data=True
 )
