@@ -20,8 +20,8 @@ setup(
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy'
     ],
     extras_require={
-        'tf': ['tensorflow==2.0.0'],
-        'tf_gpu': ['tensorflow-gpu==2.0.0'],
+        'cpu': ['tensorflow==2.0.0'],
+        'gpu': ['tensorflow-gpu==2.0.0'],
     },
     include_package_data=True
 )
