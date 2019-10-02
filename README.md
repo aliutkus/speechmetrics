@@ -12,14 +12,14 @@ As of our recent tests, installation goes smoothly on ubuntu, but there may be s
 For cpu usage:
 ```
 pip install numpy
-pip install git+https://github.com/aliutkus/speechmetrics#speechmetrics[cpu]
+pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics[cpu]
 ```
 
 For gpu usage (on the MOSNet)
 
 ```
 pip install numpy
-pip install git+https://github.com/aliutkus/speechmetrics#speechmetrics[gpu]
+pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics[gpu]
 ```
 
 # Usage
