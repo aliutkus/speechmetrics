@@ -7,9 +7,8 @@ If you find speechmetrics useful, you are welcome to cite the original papers fo
 
 # Installation
 
-clone this repository, and install it in the current environment by typing the following command from the root folder (where `setup.py` is):
 ```
-pip install -e .
+pip install https://github.com/aliutkus/speechmetrics/archive/master.zip
 ```
 
 # Usage
