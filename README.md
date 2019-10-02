@@ -6,9 +6,20 @@ This repository is a wrapper around several freely available implementations of 
 If you find speechmetrics useful, you are welcome to cite the original papers for the corresponding metrics, since this is just a wrapper around the implementations that were kindly provided by the original authors.
 
 # Installation
+As of our recent tests, installation goes smoothly on ubuntu, but there may be some compiler errors for `pypesq` on iOs.
+
+
+For cpu usage:
+```
+pip install numpy
+pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics[cpu]
+```
+
+For gpu usage (on the MOSNet)
 
 ```
-pip install https://github.com/aliutkus/speechmetrics/archive/master.zip
+pip install numpy
+pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics[gpu]
 ```
 
 # Usage
