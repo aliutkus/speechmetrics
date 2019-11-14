@@ -5,6 +5,8 @@ This repository is a wrapper around several freely available implementations of 
 
 If you find speechmetrics useful, you are welcome to cite the original papers for the corresponding metrics, since this is just a wrapper around the implementations that were kindly provided by the original authors.
 
+> Please let me know if you think of some metric with available python implementation that could be included here!
+
 # Installation
 As of our recent tests, installation goes smoothly on ubuntu, but there may be some compiler errors for `pypesq` on iOs.
 
