@@ -44,7 +44,7 @@ The process is to:
    ```scores = my_metrics(path_to_estimate, path_to_reference)```
 > __WARNING__: The convention for relative metrics is to provide __estimate first, and reference second__.  
 >  This is the opposite as the general convention.  
->     $\Rightarrow$ The advantage is: you can still call absolute metrics with the same code, they will just ignore the reference.  
+>     => The advantage is: you can still call absolute metrics with the same code, they will just ignore the reference.  
 
 ## Example
 ```
