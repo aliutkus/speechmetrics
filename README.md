@@ -131,7 +131,7 @@ As implemented [there](https://github.com/vBaiCai/python-pesq) by [@vBaiCai](htt
 
 ### STOI (`relative.stoi` or `stoi`)
 
-As implemented by [@mpariente]() [here](https://github.com/mpariente/pystoi)
+As implemented by [@mpariente](https://github.com/mpariente) [here](https://github.com/mpariente/pystoi)
 * > @inproceedings{taal2010short,  
   title={A short-time objective intelligibility measure for time-frequency weighted noisy speech},  
   author={Taal, Cees H and Hendriks, Richard C and Heusdens, Richard and Jensen, Jesper},  
@@ -161,9 +161,10 @@ As implemented by [@mpariente]() [here](https://github.com/mpariente/pystoi)
   publisher={IEEE}  
 }
 
-### SISDR: Shift-invariant SDR (`relative.sisdr` or `sisdr`) 
+### SISDR: Scale-invariant SDR (`relative.sisdr` or `sisdr`) 
 
-As described in the following paper and implemented by @Jonathan-LeRoux [here](https://github.com/sigsep/bsseval/issues/3#issuecomment-494995846)
+As described in the following paper and implemented by 
+[@Jonathan-LeRoux](https://github.com/Jonathan-LeRoux) [here](https://github.com/sigsep/bsseval/issues/3#issuecomment-494995846)
 * > @article{Roux_2019,  
    title={SDR – Half-baked or Well Done?},  
    ISBN={9781479981311},  
