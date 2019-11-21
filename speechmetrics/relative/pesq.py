@@ -11,7 +11,7 @@ class PESQ(Metric):
         from pypesq import pesq
         if len(audios) != 2:
             raise ValueError('PESQ needs a reference and a test signals.')
-        return {'pesq': pesq(audios[0], audios[1], rate)}
+        return {'pesq': pesq(audios[1], audios[0], rate)}
 
 
 def load(window, hop=None):

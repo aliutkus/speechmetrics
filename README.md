@@ -28,29 +28,47 @@ pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics[gpu]
 
 `speechmetrics` has been designed to be easily used in a modular way. All you need to do is to specify the actual metrics you want to use and it will load them.
 
-This behaviour is encapsulated in the `load` function from the root of the package, that takes two arguments:
-* metrics: str or list of str
-  the available metrics that match this argument will be automatically loaded. This matching is relative to the structure of the speechmetrics package.
-  For instance:
-    - 'absolute' will match all absolute metrics
-    - 'absolute.srmr' or 'srmr' will only match SRMR
-    - '' will match all
-* window: float or None
-  gives the length in seconds of the windows on which to compute the actual scores. If None, the whole signals will be considered.
+The process is to:
+1. Load the metrics you want with the `load` function from the root of the package, that takes two arguments:
+    * metrics: str or list of str
+      the available metrics that match this argument will be automatically loaded. This matching is relative to the structure of the speechmetrics package.
+      For instance:
+        - 'absolute' will match all absolute metrics
+        - 'absolute.srmr' or 'srmr' will only match SRMR
+        - '' will match all
+    * window: float or None
+      gives the length in seconds of the windows on which to compute the actual scores. If None, the whole signals will be considered.  
+    ```my_metrics = speechmetrics.load('relative', window=5)```
+
+2. Just call the object returned by `load` with your estimated file (and your reference in case of relative metrics.)  
+   ```scores = my_metrics(path_to_estimate, path_to_reference)```
+> __WARNING__: The convention for relative metrics is to provide __estimate first, and reference second__.  
+>  This is the opposite as the general convention.  
+>     $\Rightarrow$ The advantage is: you can still call absolute metrics with the same code, they will just ignore the reference.  
 
 ## Example
 ```
+# the case of absolute metrics
 import speechmetrics
 window_length = 5 # seconds
 metrics = speechmetrics.load('absolute', window_length)
-
 scores = metrics(path_to_audio_file)
+
+# the case of relative metrics
+metrics = speechmetrics.load(['bsseval', 'sisdr'], window_length)
+scores = metrics(path_to_estimate_file, path_to_reference)
+
+# mixed case, still works
+metrics = speechmetrics.load(['bsseval', 'mosnet'], window_length)
+scores = metrics(path_to_estimate_file, path_to_reference)
+
 ```
 
 # Available metrics
-## Absolute metrics
 
-### MOSNet
+## Absolute metrics (`absolute`)
+
+### MOSNet (`absolute.mosnet` or `mosnet`)
 
 As provided by the authors of [MOSNet: Deep Learning based Objective Assessment for Voice Conversion](https://arxiv.org/abs/1904.08352). Original github [here](https://github.com/lochenchou/MOSNet)
 > @article{lo2019mosnet,  
@@ -60,7 +78,7 @@ As provided by the authors of [MOSNet: Deep Learning based Objective Assessment 
   year={2019}
 }
 
-### SRMR
+### SRMR (`absolute.srmr` or `srmr`)
 
 As provided by the [SRMR Toolbox](https://github.com/jfsantos/SRMRpy), implemented by [@jfsantos](https://github.com/jfsantos).
 
@@ -74,7 +92,7 @@ As provided by the [SRMR Toolbox](https://github.com/jfsantos/SRMRpy), implement
   year={2010},  
 }
 
-* > @inproceedings{santos2014updated,
+* > @inproceedings{santos2014updated,  
   title={An updated objective intelligibility   estimation metric for normal hearing listeners under noise and reverberation},  
   author={Santos, Joo F and Senoussaoui, Mohammed and Falk, Tiago H},  
   booktitle={Proc. Int. Workshop Acoust. Signal Enhancement},  
@@ -92,8 +110,9 @@ As provided by the [SRMR Toolbox](https://github.com/jfsantos/SRMRpy), implement
   year={2014},  
 }
 
-## Relative metrics
-### BSSEval
+## Relative metrics (`relative`)
+
+### BSSEval (`relative.bsseval` or `bsseval`)
 
 As presented in [this](https://hal-lirmm.ccsd.cnrs.fr/lirmm-01766791v2/document) paper and freely available in [the official museval page](https://github.com/sigsep/sigsep-mus-eval), corresponds to BSSEval v4. There are 3 submetrics handled here: SDR, SAR, ISR.
 
@@ -106,11 +125,11 @@ As presented in [this](https://hal-lirmm.ccsd.cnrs.fr/lirmm-01766791v2/document)
   pages="293--305"  
 }
 
-### PESQ
+### PESQ (`relative.pesq` or `pesq`)
 
 As implemented [there](https://github.com/vBaiCai/python-pesq) by [@vBaiCai](https://github.com/vBaiCai).
 
-### STOI
+### STOI (`relative.stoi` or `stoi`)
 
 As implemented by [@mpariente]() [here](https://github.com/mpariente/pystoi)
 * > @inproceedings{taal2010short,  
@@ -140,4 +159,19 @@ As implemented by [@mpariente]() [here](https://github.com/mpariente/pystoi)
   pages={2009--2022},  
   year={2016},  
   publisher={IEEE}  
+}
+
+### SISDR: Shift-invariant SDR (`relative.sisdr` or `sisdr`) 
+
+As described in the following paper and implemented by @Jonathan-LeRoux [here](https://github.com/sigsep/bsseval/issues/3#issuecomment-494995846)
+* > @article{Roux_2019,  
+   title={SDR – Half-baked or Well Done?},  
+   ISBN={9781479981311},  
+   url={http://dx.doi.org/10.1109/ICASSP.2019.8683855},  
+   DOI={10.1109/icassp.2019.8683855},  
+   journal={ICASSP 2019 - 2019 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},  
+   publisher={IEEE},  
+   author={Roux, Jonathan Le and Wisdom, Scott and Erdogan, Hakan and Hershey, John R.},  
+   year={2019},  
+   month={May}  
 }
