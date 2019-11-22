@@ -13,8 +13,8 @@ class SISDR(Metric):
         # and one estimate.
         # see original code here: https://github.com/sigsep/bsseval/issues/3#issuecomment-494995846
         eps = np.finfo(audios[0].dtype).eps
-        reference = audios[1].reshape(audios[1].shape[0], -1)
-        estimate = audios[0].reshape(audios[0].shape[0], -1)
+        reference = audios[1].reshape(audios[1].size, 1)
+        estimate = audios[0].reshape(audios[0].size, 1)
         Rss = np.dot(reference.T, reference)
 
         # get the scaling factor for clean sources

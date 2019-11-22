@@ -89,7 +89,7 @@ class MOSNet(Metric):
 
     def test_window(self, audios, rate):
         # stft. D: (1+n_fft//2, T)
-        linear = librosa.stft(y=audios[0],
+        linear = librosa.stft(y=np.asfortranarray(audios[0]),
                               n_fft=self.FFT_SIZE,
                               hop_length=self.HOP_LENGTH,
                               win_length=self.WIN_LENGTH,
