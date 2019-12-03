@@ -1,7 +1,5 @@
-import tensorflow as tf
-
-
 def load(window, hop=None):
+    import tensorflow as tf
     from .model import MOSNet
     tf.debugging.set_log_device_placement(False)
     # set memory growth
