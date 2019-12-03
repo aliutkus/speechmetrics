@@ -20,7 +20,7 @@ class Metric:
 
     def test(self, *test_files, array_rate=None):
         """loading sound files and making sure they all have the same lengths
-        (zero-padding to the largest).
+        (zero-padding to the largest). Also works with numpy arrays.
         Then, calling the `test_window` function that should be specialised
         depending on the metric."""
 
