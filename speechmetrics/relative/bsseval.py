@@ -1,11 +1,12 @@
+import numpy as np
 from .. import Metric
 
 
 class BSSEval(Metric):
     def __init__(self, window, hop=None):
         super(BSSEval, self).__init__(name='BSSEval', window=None, hop=None)
-        self.bss_window = window
-        self.bss_hop = hop if hop is not None else window
+        self.bss_window = window if window is not None else np.inf
+        self.bss_hop = hop if hop is not None else self.bss_window
 
     def test_window(self, audios, rate):
         from museval.metrics import bss_eval
