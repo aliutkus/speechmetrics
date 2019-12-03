@@ -2,8 +2,6 @@ from ... import Metric
 
 
 class SRMR(Metric):
-    from .srmr import srmr
-
     def __init__(self, window, hop=None):
         super(SRMR, self).__init__(name='SRMR', window=window, hop=hop)
 
@@ -18,4 +16,5 @@ class SRMR(Metric):
 
 
 def load(window, hop=None):
+    from .srmr import srmr
     return SRMR(window, hop)
