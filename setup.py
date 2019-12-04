@@ -12,16 +12,16 @@ setup(
         'numpy',
         'scipy',
         'tqdm',
-        'librosa',
+        'resampy',
         'pystoi',
         'museval',
         'gammatone @ git+https://github.com/detly/gammatone',
         'pypesq @ git+https://github.com/vBaiCai/python-pesq',
-        'srmrpy @ git+https://github.com/jfsantos/SRMRpy'
+        'srmrpy @ git+https://github.com/jfsantos/SRMRpy',
     ],
     extras_require={
-        'cpu': ['tensorflow==2.0.0'],
-        'gpu': ['tensorflow-gpu==2.0.0'],
+        'cpu': ['tensorflow==2.0.0', 'librosa'],
+        'gpu': ['tensorflow-gpu==2.0.0', 'librosa'],
     },
     include_package_data=True
 )
