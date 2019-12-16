@@ -40,8 +40,10 @@ The process is to:
       gives the length in seconds of the windows on which to compute the actual scores. If None, the whole signals will be considered.  
     ```my_metrics = speechmetrics.load('relative', window=5)```
 
-2. Just call the object returned by `load` with your estimated file (and your reference in case of relative metrics.)  
-   ```scores = my_metrics(path_to_estimate, path_to_reference)```
+2. Just call the object returned by `load` with your estimated file (and your reference in case of relative metrics.)    
+   ```scores = my_metrics(path_to_estimate, path_to_reference)```  
+   Numpy arrays are also supported, but the corresponding sampling rate needs to be specified  
+   ```scores = my_metrics(estimate_array, reference_array, rate=sampling_rate)```
 > __WARNING__: The convention for relative metrics is to provide __estimate first, and reference second__.  
 >  This is the opposite as the general convention.  
 >     => The advantage is: you can still call absolute metrics with the same code, they will just ignore the reference.  

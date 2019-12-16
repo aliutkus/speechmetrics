@@ -18,9 +18,9 @@ class Metric:
     def test_window(self, audios, rate):
         raise NotImplementedError
 
-    def test(self, *test_files):
+    def test(self, *test_files, array_rate=None):
         """loading sound files and making sure they all have the same lengths
-        (zero-padding to the largest).
+        (zero-padding to the largest). Also works with numpy arrays.
         Then, calling the `test_window` function that should be specialised
         depending on the metric."""
 
@@ -42,7 +42,21 @@ class Metric:
 
         for file in test_files:
             # Loading sound file
-            audio, rate = sf.read(file, always_2d=True)
+            if isinstance(file, str):
+                audio, rate = sf.read(file, always_2d=True)
+            else:
+                rate = array_rate
+                if rate is None:
+                    raise ValueError('Sampling rate needs to be specified '
+                                     'when feeding numpy arrays.')
+                audio = file
+                # Standardize shapes
+                if len(audio.shape) == 1:
+                    audio = audio[:, None]
+                if len(audio.shape) != 2:
+                    raise ValueError('Please provide 1D or 2D array, received '
+                                     '{}D array'.format(len(audio.shape)))
+
             if self.fixed_rate is not None and rate != self.fixed_rate:
                 if self.verbose:
                     print('  [%s] preferred is %dkHz rate. resampling'
@@ -97,10 +111,10 @@ class MetricsList:
     def __str__(self):
         return 'Metrics: ' + ' '.join([x.name for x in self.metrics])
 
-    def __call__(self, *files):
+    def __call__(self, *files, rate=None):
         result = {}
         for metric in self.metrics:
-            result_metric = metric.test(*files)
+            result_metric = metric.test(*files, array_rate=rate)
             for name in result_metric.keys():
                 result[name] = result_metric[name]
         return result
