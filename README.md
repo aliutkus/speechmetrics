@@ -71,6 +71,7 @@ scores = metrics(path_to_estimate_file, path_to_reference)
 ## Absolute metrics (`absolute`)
 
 ### MOSNet (`absolute.mosnet` or `mosnet`)
+*dimensionless, higher is better. 0=very bad, 5=very good*
 
 As provided by the authors of [MOSNet: Deep Learning based Objective Assessment for Voice Conversion](https://arxiv.org/abs/1904.08352). Original github [here](https://github.com/lochenchou/MOSNet)
 > @article{lo2019mosnet,  
@@ -81,6 +82,7 @@ As provided by the authors of [MOSNet: Deep Learning based Objective Assessment 
 }
 
 ### SRMR (`absolute.srmr` or `srmr`)
+*dimensionless ratio, higher is better. 0=very bad, 1=very good*
 
 As provided by the [SRMR Toolbox](https://github.com/jfsantos/SRMRpy), implemented by [@jfsantos](https://github.com/jfsantos).
 
@@ -115,6 +117,7 @@ As provided by the [SRMR Toolbox](https://github.com/jfsantos/SRMRpy), implement
 ## Relative metrics (`relative`)
 
 ### BSSEval (`relative.bsseval` or `bsseval`)
+*expressed in dB, higher is better.*
 
 As presented in [this](https://hal-lirmm.ccsd.cnrs.fr/lirmm-01766791v2/document) paper and freely available in [the official museval page](https://github.com/sigsep/sigsep-mus-eval), corresponds to BSSEval v4. There are 3 submetrics handled here: SDR, SAR, ISR.
 
@@ -128,10 +131,12 @@ As presented in [this](https://hal-lirmm.ccsd.cnrs.fr/lirmm-01766791v2/document)
 }
 
 ### PESQ (`relative.pesq` or `pesq`)
+*dimensionless, higher is better. 0=very bad, 5=very good*
 
 As implemented [there](https://github.com/vBaiCai/python-pesq) by [@vBaiCai](https://github.com/vBaiCai).
 
 ### STOI (`relative.stoi` or `stoi`)
+*dimensionless correlation coefficient, higher is better. 0=very bad, 1=very good*
 
 As implemented by [@mpariente](https://github.com/mpariente) [here](https://github.com/mpariente/pystoi)
 * > @inproceedings{taal2010short,  
@@ -164,6 +169,7 @@ As implemented by [@mpariente](https://github.com/mpariente) [here](https://gith
 }
 
 ### SISDR: Scale-invariant SDR (`relative.sisdr` or `sisdr`) 
+*expressed in dB, higher is better.*
 
 As described in the following paper and implemented by 
 [@Jonathan-LeRoux](https://github.com/Jonathan-LeRoux) [here](https://github.com/sigsep/bsseval/issues/3#issuecomment-494995846)
