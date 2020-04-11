@@ -16,12 +16,10 @@ setup(
         'pystoi',
         'museval',
         'gammatone @ git+https://github.com/detly/gammatone',
-        'pypesq @ git+https://github.com/vBaiCai/python-pesq',
+        'pypesq @ git+https://github.com/ludlows/python-pesq',
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy',
+        'librosa',
+        'tensorflow==2.0.0'
     ],
-    extras_require={
-        'cpu': ['tensorflow==2.0.0', 'librosa'],
-        'gpu': ['tensorflow-gpu==2.0.0', 'librosa'],
-    },
     include_package_data=True
 )
