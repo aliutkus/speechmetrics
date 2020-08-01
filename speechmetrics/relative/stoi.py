@@ -13,7 +13,8 @@ class STOI(Metric):
         if len(audios) != 2:
             raise ValueError('STOI needs a reference and a test signals.')
 
-        return {'stoi':stoi(audios[1], audios[0], rate, extended=self.estoi)}
+        key = 'estoi' if self.estoi else 'stoi'
+        return {key: stoi(audios[1], audios[0], rate, extended=self.estoi)}
 
 
 def load(window, hop=None):
