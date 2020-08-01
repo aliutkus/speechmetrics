@@ -3,7 +3,8 @@ from .. import Metric
 
 class STOI(Metric):
     def __init__(self, window, hop=None, estoi=False):
-        super(STOI, self).__init__(name='STOI', window=window, hop=hop)
+        name = 'ESTOI' if estoi else 'STOI'
+        super(STOI, self).__init__(name=name, window=window, hop=hop)
         self.mono = True
         self.estoi = estoi
 
