@@ -1,4 +1,4 @@
-from . import STOI
+from .stoi import STOI
 
 
 class ESTOI(STOI):
