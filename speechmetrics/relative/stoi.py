@@ -2,16 +2,19 @@ from .. import Metric
 
 
 class STOI(Metric):
-    def __init__(self, window, hop=None):
-        super(STOI, self).__init__(name='STOI', window=window, hop=hop)
+    def __init__(self, window, hop=None, estoi=False):
+        name = 'ESTOI' if estoi else 'STOI'
+        super(STOI, self).__init__(name=name, window=window, hop=hop)
         self.mono = True
+        self.estoi = estoi
 
     def test_window(self, audios, rate):
         from pystoi.stoi import stoi
         if len(audios) != 2:
             raise ValueError('STOI needs a reference and a test signals.')
 
-        return {'stoi':stoi(audios[1], audios[0], rate, extended=False)}
+        key = 'estoi' if self.estoi else 'stoi'
+        return {key: stoi(audios[1], audios[0], rate, extended=self.estoi)}
 
 
 def load(window, hop=None):
