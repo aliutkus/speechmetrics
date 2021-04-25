@@ -133,6 +133,17 @@ As presented in [this](https://hal-lirmm.ccsd.cnrs.fr/lirmm-01766791v2/document)
 ### PESQ (`relative.pesq` or `pesq`)
 *dimensionless, higher is better. 0=very bad, 5=very good*
 
+Wide band PESQ.
+As implemented [there](https://github.com/ludlows/python-pesq) by
+[@ludlows](https://github.com/ludlows). [Pranay
+Manocha](https://github.com/pranaymanocha): "[This implementation]
+matches with a very old matlab implementation of Phillip Loizou’s
+book. (I personally verified that)"
+
+### NBPESQ (`relative.nb_pesq` or `nb_pesq`)
+*dimensionless, higher is better. 0=very bad, 5=very good*
+
+Narrow band PESQ.
 As implemented [there](https://github.com/vBaiCai/python-pesq) by [@vBaiCai](https://github.com/vBaiCai).
 
 ### STOI (`relative.stoi` or `stoi`)
