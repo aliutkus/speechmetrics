@@ -18,6 +18,7 @@ setup(
         'gammatone @ git+https://github.com/detly/gammatone',
         'pypesq @ git+https://github.com/vBaiCai/python-pesq',
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy',
+        'pesq @ git+https://github.com/ludlows/python-pesq',
     ],
     extras_require={
         'cpu': ['tensorflow==2.0.0', 'librosa'],
