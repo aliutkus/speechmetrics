@@ -10,18 +10,11 @@ If you find speechmetrics useful, you are welcome to cite the original papers fo
 # Installation
 As of our recent tests, installation goes smoothly on ubuntu, but there may be some compiler errors for `pypesq` on iOs.
 
-
-For cpu usage:
-```
-pip install numpy
-pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics[cpu]
-```
-
-For gpu usage (on the MOSNet)
+Note that the mosnet seems to be incompatible with numpy >= 1.24
 
 ```
-pip install numpy
-pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics[gpu]
+pip install numpy==1.23.4
+pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics
 ```
 
 # Usage

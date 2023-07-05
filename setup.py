@@ -10,12 +10,14 @@ setup(
     packages=find_packages(),
 
     install_requires=[
-        'numpy',
+        'numpy<1.24',
         'scipy',
         'tqdm',
         'resampy',
         'pystoi',
         'museval',
+        'tensorflow>=2.0.0',
+        'librosa',
         # This is requred, but srmrpy pull it in,
 	    # and there is a pip3 conflict if we have the following
 	    # line.
@@ -24,9 +26,5 @@ setup(
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy',
         'pesq @ git+https://github.com/ludlows/python-pesq',
     ],
-    extras_require={
-        'cpu': ['tensorflow>=2.0.0', 'librosa'],
-        'gpu': ['tensorflow>=2.0.0', 'librosa'],
-    },
     include_package_data=True
 )
