@@ -57,6 +57,26 @@ nosetests.xml
 coverage.xml
 *,cover
 
+# Claude settings
+.claude/*
+
+# Virtual environments
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Poetry
+# Do not ignore poetry.lock - it should be committed
+# poetry.lock is intentionally not ignored
+
 # Translations
 *.mo
 *.pot
