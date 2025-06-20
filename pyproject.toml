@@ -1,0 +1,89 @@
+[tool.poetry]
+name = "speechmetrics"
+version = "1.0.0"
+description = "A Python library for speech quality metrics"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+license = "MIT"
+packages = [{include = "speechmetrics"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "<1.24"
+scipy = "*"
+tqdm = "*"
+resampy = "*"
+pystoi = "*"
+museval = "*"
+tensorflow = ">=2.0.0"
+librosa = "*"
+pypesq = {git = "https://github.com/vBaiCai/python-pesq"}
+srmrpy = {git = "https://github.com/jfsantos/SRMRpy"}
+pesq = {git = "https://github.com/ludlows/python-pesq", develop = true}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.11.0"
+
+[tool.poetry.scripts]
+test = "pytest:main"
+tests = "pytest:main"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--cov=speechmetrics",
+    "--cov-branch",
+    "--cov-report=term-missing:skip-covered",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "--cov-fail-under=80",
+]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "unit: marks tests as unit tests",
+    "integration: marks tests as integration tests",
+    "slow: marks tests as slow running",
+]
+
+[tool.coverage.run]
+source = ["speechmetrics"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/__init__.py",
+    "*/setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if False:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+precision = 2
+show_missing = true
+skip_covered = false
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
